@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Emoji Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #emoji-display {
+            font-size: 5rem;
+            margin: 20px 0;
+        }
+
+        #emoji-name {
+            font-size: 1.5rem;
+            margin: 10px 0;
+            color: #555;
+        }
+
+        #generate-button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+
+        #generate-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Random Emoji Generator</h1>
+        <div id="emoji-display">😊</div>
+        <div id="emoji-name">Smiling Face with Smiling Eyes</div>
+        <button id="generate-button">Generate Random Emoji</button>
+    </div>
+    <script>
+        // List of emojis with their names
+        const emojis = [
+            { emoji: '😀', name: 'Grinning Face' },
+            { emoji: '😁', name: 'Beaming Face with Smiling Eyes' },
+            { emoji: '😂', name: 'Face with Tears of Joy' },
+            { emoji: '🤣', name: 'Rolling on the Floor Laughing' },
+            { emoji: '😃', name: 'Grinning Face with Big Eyes' },
+            { emoji: '😄', name: 'Grinning Face with Smiling Eyes' },
+            { emoji: '😅', name: 'Grinning Face with Sweat' },
+            { emoji: '😆', name: 'Grinning Squinting Face' },
+            { emoji: '😉', name: 'Winking Face' },
+            { emoji: '😊', name: 'Smiling Face with Smiling Eyes' },
+            { emoji: '😋', name: 'Face Savoring Food' },
+            { emoji: '😎', name: 'Smiling Face with Sunglasses' },
+            { emoji: '😍', name: 'Smiling Face with Heart-Eyes' },
+            { emoji: '😘', name: 'Face Blowing a Kiss' },
+            { emoji: '😗', name: 'Kissing Face' },
+            { emoji: '😙', name: 'Kissing Face with Smiling Eyes' },
+            { emoji: '😚', name: 'Kissing Face with Closed Eyes' },
+            { emoji: '☺️', name: 'Smiling Face' },
+            { emoji: '🙂', name: 'Slightly Smiling Face' },
+            { emoji: '🤗', name: 'Hugging Face' },
+            { emoji: '🤔', name: 'Thinking Face' },
+            { emoji: '😐', name: 'Neutral Face' },
+            { emoji: '😑', name: 'Expressionless Face' },
+            { emoji: '😶', name: 'Face Without Mouth' },
+            { emoji: '🙄', name: 'Face with Rolling Eyes' },
+            { emoji: '😏', name: 'Smirking Face' },
+            { emoji: '😣', name: 'Persevering Face' },
+            { emoji: '😥', name: 'Sad but Relieved Face' },
+            { emoji: '😮', name: 'Face with Open Mouth' },
+            { emoji: '🤐', name: 'Zipper-Mouth Face' },
+            { emoji: '😯', name: 'Hushed Face' },
+            { emoji: '😪', name: 'Sleepy Face' },
+            { emoji: '😫', name: 'Tired Face' },
+            { emoji: '😴', name: 'Sleeping Face' },
+            { emoji: '😌', name: 'Relieved Face' },
+            { emoji: '🤓', name: 'Nerd Face' },
+            { emoji: '😛', name: 'Face with Tongue' },
+            { emoji: '😜', name: 'Winking Face with Tongue' },
+            { emoji: '😝', name: 'Squinting Face with Tongue' },
+            { emoji: '🤤', name: 'Drooling Face' },
+            { emoji: '😒', name: 'Unamused Face' },
+            { emoji: '😓', name: 'Downcast Face with Sweat' },
+            { emoji: '😔', name: 'Pensive Face' },
+            { emoji: '😕', name: 'Confused Face' },
+            { emoji: '🙃', name: 'Upside-Down Face' },
+            { emoji: '🤑', name: 'Money-Mouth Face' },
+            { emoji: '😲', name: 'Astonished Face' },
+            { emoji: '☹️', name: 'Frowning Face' },
+            { emoji: '🙁', name: 'Slightly Frowning Face' },
+            { emoji: '😖', name: 'Confounded Face' },
+            { emoji: '😞', name: 'Disappointed Face' },
+            { emoji: '😟', name: 'Worried Face' },
+            { emoji: '😤', name: 'Face with Steam From Nose' },
+            { emoji: '😢', name: 'Crying Face' },
+            { emoji: '😭', name: 'Loudly Crying Face' },
+            { emoji: '😦', name: 'Frowning Face with Open Mouth' },
+            { emoji: '😧', name: 'Anguished Face' },
+            { emoji: '😨', name: 'Fearful Face' },
+            { emoji: '😩', name: 'Weary Face' },
+            { emoji: '😬', name: 'Grimacing Face' },
+            { emoji: '😰', name: 'Anxious Face with Sweat' },
+            { emoji: '😱', name: 'Face Screaming in Fear' },
+            { emoji: '😳', name: 'Flushed Face' },
+            { emoji: '😵', name: 'Dizzy Face' },
+            { emoji: '😡', name: 'Pouting Face' },
+            { emoji: '😠', name: 'Angry Face' },
+            { emoji: '😷', name: 'Face with Medical Mask' },
+            { emoji: '🤒', name: 'Face with Thermometer' },
+            { emoji: '🤕', name: 'Face with Head-Bandage' },
+            { emoji: '🤢', name: 'Nauseated Face' },
+            { emoji: '🤧', name: 'Sneezing Face' },
+            { emoji: '😇', name: 'Smiling Face with Halo' },
+            { emoji: '🤠', name: 'Cowboy Hat Face' },
+            { emoji: '🤡', name: 'Clown Face' },
+            { emoji: '🤥', name: 'Lying Face' },
+            { emoji: '🤫', name: 'Shushing Face' },
+            { emoji: '🤭', name: 'Face with Hand Over Mouth' },
+            { emoji: '🧐', name: 'Face with Monocle' },
+            { emoji: '🤓', name: 'Nerd Face' },
+            { emoji: '😈', name: 'Smiling Face with Horns' },
+            { emoji: '👿', name: 'Angry Face with Horns' },
+            { emoji: '👹', name: 'Ogre' },
+            { emoji: '👺', name: 'Goblin' },
+            { emoji: '💀', name: 'Skull' },
+            { emoji: '👻', name: 'Ghost' },
+            { emoji: '👽', name: 'Alien' },
+            { emoji: '👾', name: 'Alien Monster' },
+            { emoji: '🤖', name: 'Robot' },
+            { emoji: '💩', name: 'Pile of Poo' },
+            { emoji: '😺', name: 'Grinning Cat' },
+            { emoji: '😸', name: 'Grinning Cat with Smiling Eyes' },
+            { emoji: '😹', name: 'Cat with Tears of Joy' },
+            { emoji: '😻', name: 'Smiling Cat with Heart-Eyes' },
+            { emoji: '😼', name: 'Cat with Wry Smile' },
+            { emoji: '😽', name: 'Kissing Cat' },
+            { emoji: '🙀', name: 'Weary Cat' },
+            { emoji: '😿', name: 'Crying Cat' },
+            { emoji: '😾', name: 'Pouting Cat' }
+        ];
+
+        // Function to generate a random emoji and its name
+        function generateRandomEmoji() {
+            const randomIndex = Math.floor(Math.random() * emojis.length);
+            return emojis[randomIndex];
+        }
+
+        // Event listener for the button
+        document.getElementById('generate-button').addEventListener('click', () => {
+            const randomEmoji = generateRandomEmoji();
+            document.getElementById('emoji-display').innerText = randomEmoji.emoji;
+            document.getElementById('emoji-name').innerText = randomEmoji.name;
+        });
+    </script>
+</body>
+
+</html>
